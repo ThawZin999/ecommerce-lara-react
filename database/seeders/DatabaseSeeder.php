@@ -40,10 +40,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
 
-        Supplier::create([
-            'name' => 'Mg Mg',
-            'image' => 'supplier.png',
-        ]);
+        $supplier = ['Hana','MMK'];
+        foreach ($supplier as $s) {
+
+            Supplier::create([
+                'name' => $s,
+                'slug' => Str::slug($s)
+            ]);
+        }
 
 
         $category = ['Tshirt', 'Hat', 'Electronic', 'Mobile', 'Earphone'];

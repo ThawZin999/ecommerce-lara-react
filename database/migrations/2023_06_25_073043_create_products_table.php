@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image');
             $table->integer('total_quantity');
+            $table->integer('buy_price');
             $table->integer('discount_price');
             $table->integer('sale_price');
             $table->integer('view_count');
