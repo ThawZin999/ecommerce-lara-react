@@ -1,0 +1,31 @@
+#users
+
+#admins
+
+#product
+id name supplier_id category_id slug desc img
+dis_price sale_price total_qty view_cout like_count
+
+#category
+id slug name
+
+#color
+id slug name
+
+#brands
+id slug name
+
+#supplier
+id name img desc
+
+#product_orders
+user_id product_id total_qty status(pending, cancel, success)
+
+#product_cart
+product_id user_id total_qty
+
+#product reviews
+user_id product_id rating review
+
+#product_add_transaction
+supplier_id product_id total_qty
