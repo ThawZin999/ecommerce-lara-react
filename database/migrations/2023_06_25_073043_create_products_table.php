@@ -24,8 +24,8 @@ return new class extends Migration
             $table->integer('buy_price');
             $table->integer('discount_price');
             $table->integer('sale_price');
-            $table->integer('view_count');
-            $table->integer('like_count');
+            $table->integer('view_count')->default(0);
+            $table->integer('like_count')->default(0);
             $table->timestamps();
         });
     }

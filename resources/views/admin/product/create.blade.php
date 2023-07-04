@@ -1,6 +1,11 @@
 @extends('admin.layout.master')
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-selection {
+            height: 3em !important;
+        }
+    </style>
 @endsection
 @section('content')
     <div>
@@ -52,21 +57,39 @@
             <div class="col-4">
                 <div class="card p-4">
                     <div class="form-group">
+                        <label for="">Choose Category</label>
+                        <select name="category_slug" id="category">
+                            @foreach ($category as $s)
+                                <option value="{{ $s->slug }}">{{ $s->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="">Choose Supplier</label>
-                        <select class="form-select" aria-label="Default select example">
+                        <select name="supplier_slug", id="supplier">
                             @foreach ($supplier as $s)
-                                <option selected value="{{ $s->slug }}">{{ $s->name }}</option>
+                                <option value="{{ $s->slug }}">{{ $s->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Choose Brand</label>
+                        <select name="brand_slug" id="brand">
+                            @foreach ($brand as $s)
+                                <option value="{{ $s->slug }}">{{ $s->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="">Choose Color</label>
-                        <select name="supplier_slug" id="supplier">
+                        <select name="color_slug[]" id="color" multiple>
                             @foreach ($color as $s)
-                                <option selected value="{{ $s->slug }}">{{ $s->name }}</option>
+                                <option value="{{ $s->slug }}">{{ $s->name }}</option>
                             @endforeach
                         </select>
                     </div>
+
+                    <input type="submit" value="Create" class="btn btn-primary mt-4">
                 </div>
             </div>
         </div>
@@ -77,7 +100,10 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('#category').select2();
             $('#supplier').select2();
+            $('#brand').select2();
+            $('#color').select2();
         });
     </script>
 @endsection

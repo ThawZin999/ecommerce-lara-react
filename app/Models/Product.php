@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category_id','brand_id','name','slug','description','image','total_quantity','buy_price','discount_price','sale_price','view_count','like_count',];
+    protected $fillable = ['category_id','supplier_id','brand_id','name','slug','description','image','total_quantity','buy_price','discount_price','sale_price','view_count','like_count',];
 
     public function brand(){
         return $this->belongsTo(Brand::class);
@@ -20,7 +20,7 @@ class Product extends Model
     }
 
     public function color(){
-        return $this->belongsToMany(Color::class);
+        return $this->belongsToMany(Color::class, 'product_color');
     }
 
     public function transaction(){
