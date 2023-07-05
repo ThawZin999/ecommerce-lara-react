@@ -9,7 +9,7 @@
 @endsection
 @section('content')
     <div>
-        <a href="{{ route('product.index') }}" class="btn btn-dark">All Category</a>
+        <a href="{{ route('product.index') }}" class="btn btn-dark">All Products</a>
     </div>
     <hr>
     <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">

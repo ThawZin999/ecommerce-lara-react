@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\ProductAddTransaction;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -19,8 +20,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::latest()->paginate();
-        return view('admin.product.index', compact('product'));
+        $products = Product::latest()->select('slug','name','image','total_quantity')->paginate(5);
+        return view('admin.product.index', compact('products'));
     }
 
     /**
@@ -56,7 +57,7 @@ class ProductController extends Controller
 
         // image upload
         $image = $request->file('image');
-        $image_name =uniqid() . Str::slug($image->getClientOriginalName());
+        $image_name =uniqid() . ($image->getClientOriginalName());
         $image->move(public_path('/images'), $image_name);
         // product store
         $category = Category::where('slug', $request->category_slug)->first();
@@ -126,7 +127,17 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::all();
+        $supplier = Supplier::all();
+        $color= Color::all();
+        $brand= Brand::all();
+        $p = Product::where('slug', $id)
+        ->with('category', 'supplier', 'color', 'brand')
+        ->first();
+        if (!$p) {
+            return redirect()->back()->with('error', "Product Not Found.");
+        }
+        return view('admin.product.edit', compact('category','supplier','color','brand', 'p'));
     }
 
     /**
@@ -142,6 +153,17 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // find product
+        $p = Product::where('slug', $id);
+        if (!$p->first()) {
+            return redirect()->back()->with('error', "Product Not Found");
+        }
+        // remove image
+        File::delete(public_path('image/'.$p->first()->image));
+        // delete product_color
+        Product::find($p->first()->id)->color()->sync([]);
+        // delete product
+        $p->delete();
+        return redirect()->back()->with('success', "Product Deleted");
     }
 }

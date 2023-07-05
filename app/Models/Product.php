@@ -38,4 +38,8 @@ class Product extends Model
     public function review(){
         return $this->hasMany(ProductReview::class);
     }
+
+    public function supplier() {
+        return $this->belongsTo(Supplier::class);
+    }
 }
