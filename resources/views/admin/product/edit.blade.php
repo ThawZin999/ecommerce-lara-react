@@ -14,6 +14,7 @@
     <hr>
     <form action="{{ route('product.update', $p->slug) }}" method="post" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="row">
             <div class="col-8">
                 {{-- product-info --}}
@@ -50,7 +51,7 @@
 
                     <div class="form-group">
                         <label for="">Discounted Price</label>
-                        <input type="number" name="discounted_price" value="{{ $p->discout_price }}" class="form-control">
+                        <input type="number" name="discounted_price" value="{{ $p->discount_price }}" class="form-control">
                     </div>
                 </div>
             </div>

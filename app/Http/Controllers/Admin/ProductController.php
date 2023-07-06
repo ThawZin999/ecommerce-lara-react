@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\ProductAddTransaction;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -104,7 +105,7 @@ class ProductController extends Controller
         ProductAddTransaction::create([
             'supplier_id' => $supplier->id,
             'product_id' => $product->id,
-            'total_quantity' => $request->total_quantity
+            'total_quantity' => $request->total_quantity,
         ]);
         // store to product_color
         $p = Product::find($product->id);
@@ -145,7 +146,65 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $find_product = Product::where('slug', $id);
+        if (!$find_product) {
+            return redirect()->with('error',"Product not found.");
+        }
+        $product_id = $find_product->first()->id;
+        // image
+        if ($file = $request->image) {
+            $file_name = uniqid() . $file->getClientOriginalName();
+            $file->move(public_path('/images'), $file_name);
+        }else{
+            $file_name = $find_product->first()->image;
+        }
+
+        // update
+        $category = Category::where('slug', $request->category_slug)->first();
+        if (!$category) {
+            return redirect()->back()->with('error', "Category Not Found.");
+        }
+        $supplier = Supplier::where('slug', $request->supplier_slug)->first();
+        if (!$supplier) {
+            return redirect()->back()->with('error', "Supplier Not Found.");
+        }
+        //  dd($request->supplier_slug);
+        //  dd($supplier->id);
+        $brand = Brand::where('slug', $request->brand_slug)->first();
+        if (!$brand) {
+            return redirect()->back()->with('error', "Brand Not Found.");
+        }
+
+        $colors = [];
+        foreach ($request->color_slug as $c) {
+            $color = Color::where('slug', $c)->first();
+            if (!$color) {
+                return redirect()->back()->with('error', "Color Not Found.");
+            }
+            $colors[] = $color->id;
+        }
+        $slug = Str::slug($request->name) . uniqid();
+        $find_product->update([
+            'category_id' => $category->id,
+            'supplier_id' => $supplier->id,
+            'brand_id' => $brand->id,
+            'name' => $request->name,
+            'slug' =>  $slug,
+            'description' => $request->description,
+            'image' => $file_name,
+            'total_quantity' => $request->total_quantity,
+            'buy_price' => $request->buy_price,
+            'discount_price' => $request->discounted_price,
+            'sale_price' => $request->sale_price,
+            'view_count' => 0,
+            'like_count' => 0,
+        ]);
+
+        // color
+        $product = Product::find($product_id);
+        $product->color()->sync($colors);
+
+        return redirect(route('product.edit', $slug))->with('success', "Product Updated");
     }
 
     /**
@@ -165,5 +224,33 @@ class ProductController extends Controller
         // delete product
         $p->delete();
         return redirect()->back()->with('success', "Product Deleted");
+    }
+
+    public function createProductAdd($slug) {
+        $product  = Product::where('slug', $slug)->first();
+        if (!$product) {
+            return redirect()->back()->with('error', "Product Not Found");
+        }
+        $supplier = Supplier::all();
+        return view('admin.product.create-product-add', compact('product','supplier'));
+    }
+
+    public function storeProductAdd(Request $request, $slug) {
+        $product  = Product::where('slug', $slug)->first();
+        if (!$product) {
+            return redirect()->back()->with('error', "Product Not Found");
+        }
+        // store to tran
+        ProductAddTransaction::create([
+            'product_id' => $product->id,
+            'supplier_id' => $request->supplier_id,
+            'total_quantity' => $request->total_quantity,
+            'description' => $request->description
+        ]);
+        // update product
+        $product->update([
+            'total_quantity' => DB::raw('total_quantity+' . $request->total_quantity)
+        ]);
+        return redirect()->back()->with('success', $request->total_quantity . 'added.');
     }
 }

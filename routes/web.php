@@ -20,7 +20,10 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/', [PageController::class, 'showDashboard']);
 
+    // product
     Route::resource('/product', ProductController::class);
+    Route::get('/create-product-add/{slug}', [ProductController::class, 'createProductAdd']);
+    Route::post('/create-product-add/{slug}', [ProductController::class, 'storeProductAdd']);
 
     Route::resource('/category', CategoryController::class);
 
