@@ -54,7 +54,9 @@ class DatabaseSeeder extends Seeder
         foreach ($category as $c) {
             Category::create([
                 'slug'=>Str::slug($c),
-                'name'=>$c
+                'name'=>$c,
+                'mm_name' => "မြန်မာ",
+                'image' => '64a435ca49b5706.06 ads.png'
             ]);
         }
 

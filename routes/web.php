@@ -16,7 +16,7 @@ Route::get('/', function () {
 Route::get('/admin/login', [PageController::class, 'showLogin']);
 Route::post('/admin/login', [PageController::class, 'login']);
 
-Route::group(['prefix'=>'admin','namespace'=>'admin', 'middleware'=> ['Admin']], function () {
+Route::group(['prefix'=>'admin', 'middleware'=> ['Admin']], function () {
     Route::post('/logout', [PageController::class, 'logout']);
 
     Route::get('/', [PageController::class, 'showDashboard']);

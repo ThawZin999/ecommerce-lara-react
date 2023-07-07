@@ -8,7 +8,9 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Image</th>
                 <th>Name</th>
+                <th>MM_Name</th>
                 <th>Option</th>
             </tr>
         </thead>
@@ -16,7 +18,10 @@
         @foreach ($category as $c)
             <tbody>
                 <tr>
+                    <td><img src="{{ asset('images/' . $c->image) }}" width="100px" class="img-thumbmail" alt="cat-image">
+                    </td>
                     <td>{{ $c->name }}</td>
+                    <td>{{ $c->mm_name }}</td>
                     <td>
                         <a href="{{ route('category.edit', $c->slug) }}" class="btn btn-sm btn-primary">Edit</a>
                         <span>

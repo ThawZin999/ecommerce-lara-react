@@ -33,12 +33,20 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required"
+            "name" => "required",
+            "mm_name" => "required",
+            "image" => "required|mimes:png,jpg,jpeg,webp|max:2048",
         ]);
+
+        $file = $request->file('image');
+        $file_name = uniqid(). $file->getClientOriginalName();
+        $file->move(public_path('/images'), $file_name);
 
         Category::create([
             "slug" => Str::slug($request->name) . uniqid(),
-            "name" => $request->name
+            "name" => $request->name,
+            "mm_name" => $request->mm_name,
+            "image" => $file_name,
         ]);
         return redirect()->back()->with('success',"Category created successfully.");
     }
@@ -75,8 +83,19 @@ class CategoryController extends Controller
         if (!$cat) {
             return redirect()->back()->with('error',"Category not found.");
         }
+
+        // image
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $file_name = uniqid(). $file->getClientOriginalName();
+            $file->move(public_path('/images'), $file_name);
+        }else{
+            $file_name = $cat->image;
+        }
         Category::where('slug', $id)->update([
-            "name" => $request->name
+            "name" => $request->name,
+            "mm_name" => $request->mm_name,
+            "image" => $file_name,
         ]);
         return redirect(route('category.index'))->with('success',"Category updated successfully");
     }
