@@ -47,6 +47,12 @@
                             <span class="nav-link-text">Supplier</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url('/admin/product-add-transaction') }}">
+                            <i class="ni ni-tv-2 text-primary"></i>
+                            <span class="nav-link-text">Product Transaction</span>
+                        </a>
+                    </li>
 
                 </ul>
                 <!-- Divider -->

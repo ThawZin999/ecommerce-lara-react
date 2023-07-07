@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductAddTransaction;
+use App\Models\ProductRemoveTransaction;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -253,4 +254,44 @@ class ProductController extends Controller
         ]);
         return redirect()->back()->with('success', $request->total_quantity . 'added.');
     }
+
+    public function productAddTrasaction() {
+        $transaction = ProductAddTransaction::with('product','supplier')->latest()->paginate(5);
+        // return $transaction;
+        return view('admin.product.add-transaction', compact('transaction'));
+    }
+
+    public function createProductRemove($slug) {
+        $product  = Product::where('slug', $slug)->first();
+        if (!$product) {
+            return redirect()->back()->with('error', "Product Not Found");
+        }
+        return view('admin.product.create-product-remove', compact('product'));
+    }
+
+
+    public function storeProductRemove(Request $request, $slug) {
+        $product  = Product::where('slug', $slug)->first();
+        if (!$product) {
+            return redirect()->back()->with('error', "Product Not Found");
+        }
+        // store to tran
+        ProductRemoveTransaction::create([
+            'product_id' => $product->id,
+            'total_quantity' => $request->total_quantity,
+            'description' => $request->description
+        ]);
+        // update product
+        $product->update([
+            'total_quantity' => DB::raw('total_quantity-' . $request->total_quantity)
+        ]);
+        return redirect()->back()->with('success', $request->total_quantity . ' removed.');
+    }
+
+    public function productRemoveTrasaction() {
+        $transaction = ProductRemoveTransaction::with('product')->latest()->paginate(5);
+        // return $transaction;
+        return view('admin.product.remove-transaction', compact('transaction'));
+    }
+
 }

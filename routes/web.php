@@ -23,7 +23,11 @@ Route::prefix('admin')->group(function () {
     // product
     Route::resource('/product', ProductController::class);
     Route::get('/create-product-add/{slug}', [ProductController::class, 'createProductAdd']);
+    Route::get('/create-product-remove/{slug}', [ProductController::class, 'createProductRemove']);
     Route::post('/create-product-add/{slug}', [ProductController::class, 'storeProductAdd']);
+    Route::post('/create-product-remove/{slug}', [ProductController::class, 'storeProductRemove']);
+    Route::get('/product-add-transaction', [ProductController::class, 'productAddTrasaction']);
+    Route::get('/product-remove-transaction', [ProductController::class, 'productRemoveTrasaction']);
 
     Route::resource('/category', CategoryController::class);
 

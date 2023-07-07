@@ -24,7 +24,7 @@
                         <td>{{ $p->name }}</td>
                         <td>{{ $p->total_quantity }}</td>
                         <td>
-                            <a href="{{ url('admin/product-remove') }}" class="btn btn-sm btn-warning">-</a>
+                            <a href="{{ url('admin/create-product-remove', $p->slug) }}" class="btn btn-sm btn-warning">-</a>
                             <a href="{{ url('admin/create-product-add', $p->slug) }}" class="btn btn-sm btn-warning">+</a>
                         </td>
                         <td>
