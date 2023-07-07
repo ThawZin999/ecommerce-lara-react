@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SupplierController;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,7 +16,7 @@ Route::get('/', function () {
 Route::get('/admin/login', [PageController::class, 'showLogin']);
 Route::post('/admin/login', [PageController::class, 'login']);
 
-Route::prefix('admin')->group(function () {
+Route::group(['prefix'=>'admin','namespace'=>'admin', 'middleware'=> ['Admin']], function () {
     Route::post('/logout', [PageController::class, 'logout']);
 
     Route::get('/', [PageController::class, 'showDashboard']);
