@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -17,19 +17,21 @@
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ asset('web_assets/css/argon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('web_assets/css/style.css') }}">
+
+    @yield('style')
+
+    @viteReactRefresh
+    @vite('resources/js/app.jsx')
 </head>
 
 <body>
     <!-- header -->
-    <style>
-
-    </style>
     <div class="header">
         <div class="w-80">
             <!-- navigation -->
             <div class="nav d-flex justify-content-between pt-3">
                 <div class="nav-first d-flex justify-content-between align-items-center">
-                    <img src="assets/images/logo.png" width="50" alt="">
+                    <img src="web_assets/images/logo.png" width="50" alt="">
                     <div class="nav-item-group ml-5">
 
                         <a href="" class="text-white btn btn btn-outline-warning">Product</a>
@@ -87,281 +89,7 @@
         </div>
     </div>
 
-    <!-- category list -->
-    <div class="w-80 mt-5">
-        <div class="row mt-2">
-
-            <!-- loop category -->
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 border">
-                <a href="" class="text-dark">
-                    <div class="d-flex justify-content-around align-items-center p-3">
-                        <img src="/assets/images/category.jpeg" width="100" alt="">
-                        <div class="text-center">
-                            <p class="fs-2">Category One</p>
-                            <small class="">10 items</small>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-
-
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 border">
-                <div class="d-flex justify-content-around align-items-center p-3">
-                    <img src="/assets/images/category.jpeg" width="100" alt="">
-                    <div class="text-center">
-                        <p class="fs-2">Category One</p>
-                        <small class="">10 items</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 border">
-                <div class="d-flex justify-content-around align-items-center p-3">
-                    <img src="/assets/images/category.jpeg" width="100" alt="">
-                    <div class="text-center">
-                        <p class="fs-2">Category One</p>
-                        <small class="">10 items</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 border">
-                <div class="d-flex justify-content-around align-items-center p-3">
-                    <img src="/assets/images/category.jpeg" width="100" alt="">
-                    <div class="text-center">
-                        <p class="fs-2">Category One</p>
-                        <small class="">10 items</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 border">
-                <div class="d-flex justify-content-around align-items-center p-3">
-                    <img src="/assets/images/category.jpeg" width="100" alt="">
-                    <div class="text-center">
-                        <p class="fs-2">Category One</p>
-                        <small class="">10 items</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 border">
-                <div class="d-flex justify-content-around align-items-center p-3">
-                    <img src="/assets/images/category.jpeg" width="100" alt="">
-                    <div class="text-center">
-                        <p class="fs-2">Category One</p>
-                        <small class="">10 items</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 border">
-                <div class="d-flex justify-content-around align-items-center p-3">
-                    <img src="/assets/images/category.jpeg" width="100" alt="">
-                    <div class="text-center">
-                        <p class="fs-2">Category One</p>
-                        <small class="">10 items</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 border">
-                <div class="d-flex justify-content-around align-items-center p-3">
-                    <img src="/assets/images/category.jpeg" width="100" alt="">
-                    <div class="text-center">
-                        <p class="fs-2">Category One</p>
-                        <small class="">10 items</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="w-80 mt-5">
-
-        <div class="row">
-
-            <div class="col-12 col-sm-12 col-md-3 col-lg-3 ">
-                <a href="">
-                    <div class="border bg-warning p-5 text-center rounded">
-                        <img src="/assets/images/product1.jpeg" class="w-80 margin-auto  rounded" alt="">
-                        <div class="mt-5">
-                            <h4 class="text-center mt-4 text-white">စားအုန်းဆီ အစစ်</h4>
-                            <span class="text badge badge-white">10000ks</span>
-                            <span class="text badge badge-danger"><strike>12000ks</strike></span>
-                        </div>
-                    </div>
-                </a>
-
-
-                <div class="border bg-primary p-5 text-center rounded">
-                    <img src="/assets/images/product2.jpeg" class="w-80 margin-auto  rounded" alt="">
-                    <div class="mt-5">
-                        <h4 class="text-center mt-4 text-white">Speaker</h4>
-                        <span class="text badge badge-white">10000ks</span>
-                        <span class="text badge badge-danger"><strike>12000ks</strike></span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-9 col-lg-9">
-                <div class="row">
-                    <!-- products -->
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3 product">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <b class="fs-1">T-Shirt</b>
-                                    <a href="" class="btn btn-warning">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!-- loop product -->
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <a href="">
-                                    <div class="card p-2">
-                                        <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                        <b>Samsung Tablet</b>
-                                        <div>
-                                            <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                            <small class="badge bg-primary">1000ks</small>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3 product">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <b class="fs-1">T-Shirt</b>
-                                    <a href="" class="btn btn-warning">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!-- loop product -->
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <a href="">
-                                    <div class="card p-2">
-                                        <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                        <b>Samsung Tablet</b>
-                                        <div>
-                                            <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                            <small class="badge bg-primary">1000ks</small>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 text-center mt-2">
-                                <div class="card p-2">
-                                    <img src="assets/images/product3.jpeg" alt="" class="w-100">
-                                    <b>Samsung Tablet</b>
-                                    <div>
-                                        <small class=" badge badge-danger"> <strike>100ks</strike> </small>
-                                        <small class="badge bg-primary">1000ks</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @yield('content')
 
     <div class="bg-dark p-5 text-center text-white">
         Develop By <a href="https://mmcoder.com" class="text-success">MM-Coder</a>
@@ -376,6 +104,8 @@
     </script>
 
     <script src="{{ asset('web_assets/js/argon.min.js') }}"></script>
+
+    @yield('script')
 
 </body>
 
