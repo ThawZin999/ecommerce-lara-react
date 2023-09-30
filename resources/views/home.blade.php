@@ -1,5 +1,8 @@
 @extends('layout.master')
 
 @section('content')
-    <div id="app"></div>
+@endsection
+
+@section('script')
+    @vite('resources/js/app.jsx')
 @endsection

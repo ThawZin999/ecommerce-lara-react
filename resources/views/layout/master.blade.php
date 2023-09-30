@@ -14,6 +14,8 @@
         rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ asset('web_assets/css/argon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('web_assets/css/style.css') }}">
@@ -21,79 +23,28 @@
     @yield('style')
 
     @viteReactRefresh
-    @vite('resources/js/app.jsx')
+
 </head>
 
 <body>
     <!-- header -->
-    <div class="header">
-        <div class="w-80">
-            <!-- navigation -->
-            <div class="nav d-flex justify-content-between pt-3">
-                <div class="nav-first d-flex justify-content-between align-items-center">
-                    <img src="web_assets/images/logo.png" width="50" alt="">
-                    <div class="nav-item-group ml-5">
+    @if (request()->is('/'))
+        @include('layout.homeHeader')
+    @else
+        @include('layout.header')
+    @endif
 
-                        <a href="" class="text-white btn btn btn-outline-warning">Product</a>
-                        <a href="" class="text-white btn btn btn-outline-dark">Category</a>
-                        <a href="" class="text-white btn btn btn-outline-dark ">Hot Deal</a>
-                        <a href="" class="text-white btn btn btn-outline-dark ">About</a>
-
-                        <a href="#" class="btn btn-outline-dark cart-container">
-
-                            <i class="fas text-danger  fa-shopping-basket fs-1"></i>
-                            <span class="cart-no bg-danger text-white">10</span>
-                        </a>
-
-                    </div>
-                </div>
-                <div class="d-flex jusity-content-center">
-                    <div class=" d-flex justify-content-center align-items-center">
-                        <div class="dropdown">
-                            <button class="btn btn-dark text-white dropdown-toggle" type="button"
-                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Account
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" d-flex justify-content-center align-items-center">
-                        <div class="dropdown">
-                            <button class="btn btn-dark text-white dropdown-toggle" type="button"
-                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Language
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">မြန်မာ</a>
-                                <a class="dropdown-item" href="#">English</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mt-5 text-center p-5">
-            <h1 class="text-center text-white">Welcome From M-Commerce</h1>
-            <small class="">M-Commerce is Develop by mmcoder.com and for educational purpose...</small>
-
-            <div class="mt-5">
-                <a href="" class="btn btn-dark">Login</a>
-                <a href="" class="btn btn-outline-dark text-white">Register</a>
-            </div>
-        </div>
+    <div id="root">
+        @yield('content')
     </div>
-
-    @yield('content')
 
     <div class="bg-dark p-5 text-center text-white">
         Develop By <a href="https://mmcoder.com" class="text-success">MM-Coder</a>
     </div>
+
+    {{-- Toastify --}}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
@@ -104,6 +55,50 @@
     </script>
 
     <script src="{{ asset('web_assets/js/argon.min.js') }}"></script>
+
+    @if (session()->has('error'))
+        <script>
+            Toastify({
+                text: "{{ session('error') }}",
+                position: "center",
+                className: 'bg-danger'
+
+            }).showToast();
+        </script>
+    @endif
+
+    @if (session()->has('success'))
+        <script>
+            Toastify({
+                text: "{{ session('success') }}",
+                position: "center",
+                className: 'bg-success'
+
+            }).showToast();
+        </script>
+    @endif
+
+    <script>
+        window.updateCart = cart => {
+            const cartCount = document.getElementById('cartCount');
+            cartCount.innerText = cart;
+        }
+
+
+        window.auth = @json(auth()->user());
+        window.locale = "{{ app()->getLocale() }}"
+
+        const showToast = (
+            message,
+            type = 'success'
+        ) => {
+            Toastify({
+                text: message,
+                position: "center",
+                className: type === 'success' ? 'bg-success' : 'bg-danger',
+            }).showToast();
+        }
+    </script>
 
     @yield('script')
 

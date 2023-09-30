@@ -5,13 +5,21 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 
 class HomeApi extends Controller
 {
     public function home(){
         $category = Category::withCount('product')->get();
-        $featureProduct = Product::all()->random(2);
+
+        try {
+            $featureProduct = Product::all()->random(2);
+        } catch (Exception $e) {
+            $featureProduct = [];
+        }
+
         $productByCategory = Category::has('product')->take(2)->get();
 
         foreach ($productByCategory as $k => $v) {

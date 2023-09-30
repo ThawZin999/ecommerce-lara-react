@@ -47,7 +47,11 @@ export default function Home() {
                                                 alt="image"
                                             />
                                             <div className="text-center">
-                                                <p className="fs-2">{d.name}</p>
+                                                <p className="fs-2">
+                                                    {window.locale === "mm"
+                                                        ? d.mm_name
+                                                        : d.name}
+                                                </p>
                                                 <small className="">
                                                     {d.product_count}
                                                 </small>

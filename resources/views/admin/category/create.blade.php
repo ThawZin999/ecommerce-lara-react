@@ -19,7 +19,7 @@
 
         <div class="form-group">
             <label for="">Enter Category Name</label>
-            <input type="file" name="image" id="" class="form-control">
+            <input type="file" name="image" id="" class="form-control"></textarea>
         </div>
         <input type="submit" value="Create" class="btn btn-primary">
     </form>

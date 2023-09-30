@@ -30,8 +30,12 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'userone',
+            'phone' => '09123456789',
             'email' => 'userone@gmail.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
+            'image' => 'user.png',
+            'address' => 'Address',
+
         ]);
 
         Admin::create([

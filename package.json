@@ -6,7 +6,7 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "axios": "^1.1.2",
+        "axios": "^1.5.0",
         "laravel-vite-plugin": "^0.7.5",
         "vite": "^4.0.0"
     },
@@ -15,6 +15,7 @@
         "bootstrap": "4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-router-dom": "^6.14.0"
+        "react-router-dom": "^6.14.0",
+        "react-star-ratings": "^2.3.0"
     }
 }

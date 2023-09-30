@@ -1,16 +1,16 @@
 import { createRoot } from "react-dom/client";
 import { HashRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home.jsx";
+import Home from "./Home/Home.jsx";
 
-const MainRouter = () => {
+const App = () => {
     return (
         <HashRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route exact path="/" element={<Home />} />
             </Routes>
         </HashRouter>
     );
 };
 
-createRoot(document.getElementById("app")).render(<MainRouter />);
+createRoot(document.getElementById("root")).render(<App />);

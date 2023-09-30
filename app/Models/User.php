@@ -19,9 +19,18 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'phone',
         'email',
         'password',
+        'image',
+        'address',
     ];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute() {
+        return asset('/images/'. $this->image );
+    }
 
     public function cart(){
         return $this->hasMany(ProductCart::class);
